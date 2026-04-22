@@ -25,7 +25,7 @@ Finvisor is a full-stack financial portfolio management platform. Admins define 
 
 | Role     | Capabilities |
 |----------|-------------|
-| Admin    | Create, update, delete asset classes; view all users and portfolios |
+| Admin    | Create, update, delete asset classes |
 | Customer | Sign up, create portfolios (capital + risk level), view allocation breakdowns |
 
 ### Key Features
