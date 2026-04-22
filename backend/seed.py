@@ -47,7 +47,7 @@ def seed():
             admin = User(
                 name=ADMIN_NAME,
                 email=ADMIN_EMAIL,
-                hashed_password=hash_password(ADMIN_PASSWORD),
+                password=hash_password(ADMIN_PASSWORD),
                 role=UserRoleEnum.ADMIN,
             )
             db.add(admin)

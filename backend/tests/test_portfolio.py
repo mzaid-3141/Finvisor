@@ -41,11 +41,22 @@ def _auth_headers(client, email, password):
 
 
 def _setup_admin_with_assets(client):
-    """Register admin, log in, and create all asset classes."""
-    client.post("/users/auth/signup", json={
-        "name": "Admin", "email": "admin@finvisor.com",
-        "password": "Admin@1234", "role": "Admin",
-    })
+    """Seed admin directly in DB (signup is customer-only), then create assets via API."""
+    from app.database import get_db
+    from app.models.user import User
+    from app.models.enum import UserRoleEnum
+    from app.auth import hash_password
+
+    session = next(client.app.dependency_overrides[get_db]())
+    admin = User(
+        name="Admin",
+        email="admin@finvisor.com",
+        password=hash_password("Admin@1234"),
+        role=UserRoleEnum.ADMIN,
+    )
+    session.add(admin)
+    session.commit()
+
     headers = _auth_headers(client, "admin@finvisor.com", "Admin@1234")
     for asset in ASSETS:
         r = client.post("/assets/", json=asset, headers=headers)
